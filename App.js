@@ -59,8 +59,8 @@ function loginScreen({ navigation, route }) {
         <Text style={{ fontSize: 30, margin: 5, fontWeight: 'bold' }}>환영합니다!</Text>
       </View>
       <View style={styles.content}>
-        <TextInput placeholder="아이디를 입력하세요." style={{ fontSize: 20, padding: 10, margin: 10 }} />
-        <TextInput placeholder="비밀번호를 입력하세요." style={{ fontSize: 20, padding: 10, margin: 10 }} />
+        <TextInput placeholder="아이디를 입력하세요" style={{ fontSize: 20, padding: 10, margin: 10 }} />
+        <TextInput placeholder="비밀번호를 입력하세요" style={{ fontSize: 20, padding: 10, margin: 10 }} />
       </View>
       <View style={styles.footer}>
         <CustomButton
