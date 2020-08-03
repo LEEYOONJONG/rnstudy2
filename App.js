@@ -80,28 +80,23 @@ function loginScreen({ navigation, route }) {
 function MyScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <CustomButton
-          buttonColor={'#846584'}
-          title="로그아웃"
-          titleColor='white'
-          onPress={() => {
-            navigation.navigate('Intro')
-          }}
-        />
-        
+      <View style={styles.topbar}>
+        <Text style={styles.topbartext}>My</Text>
+        <Icon style={styles.topbarsetting} name="cog" onPress={()=>{navigation.navigate('Intro')}} />
+      </View>
+      <View style={styles.content}>
       </View>
 
 
     </View>
-    
+
   );
 }
 function GroupScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>second!</Text>
-      <Icon name="bluetooth-outline" size={30} color="blue"/>
+      <Icon name="bluetooth-outline" size={30} color="blue" />
     </View>
   );
 }
@@ -131,7 +126,7 @@ function App() {
         <Stack.Screen name="Intro" component={IntroScreen} options={{ headerShown: false }} />
         <Stack.Screen name="signup" component={signupScreen} options={{ title: '회원가입', headerTintColor: '#a30527', headerTitleStyle: { color: 'black' } }} />
         <Stack.Screen name="login" component={loginScreen} options={{ title: '로그인', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }} />
-        <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -139,42 +134,43 @@ function App() {
 function Home() {
   return (
     <Tab.Navigator
-      screenOptions={({route})=> ({tabBarIcon: ({focused, color, size})=>{
-        let iconName;
-        if (route.name === 'My'){
-          iconName = focused
-          ? 'person'
-          : 'person-outline'
-        }
-        else if (route.name === 'Group'){
-          iconName = focused
-          ? 'people'
-          : 'people-outline'
-        }
-        else if (route.name === 'Church'){
-          iconName = focused
-          ? 'grid'
-          : 'grid-outline'
-        }
-        else if (route.name === 'Community'){
-          iconName = focused
-          ? 'globe'
-          : 'globe-outline'
-        }
-        return <Icon name={iconName} size={size} color={color} />;
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'My') {
+            iconName = focused
+              ? 'person'
+              : 'person-outline'
+          }
+          else if (route.name === 'Group') {
+            iconName = focused
+              ? 'people'
+              : 'people-outline'
+          }
+          else if (route.name === 'Church') {
+            iconName = focused
+              ? 'grid'
+              : 'grid-outline'
+          }
+          else if (route.name === 'Community') {
+            iconName = focused
+              ? 'globe'
+              : 'globe-outline'
+          }
+          return <Icon name={iconName} size={size} color={color} />;
 
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: 'tomato',
-      inactiveTintColor:'gray',
-    }}
-    
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      }}
+
     >
-      <Tab.Screen name="My" component={MyScreen} options={{headerShown: false}} />
-      <Tab.Screen name="Group" component={GroupScreen} options={{headerShown: true}}/>
-      <Tab.Screen name="Church" component={ChurchScreen} options={{headerShown: true}}/>
-      <Tab.Screen name="Community" component={CommunityScreen} options={{headerShown: true}}/>
+      <Tab.Screen name="My" component={MyScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Group" component={GroupScreen} options={{ headerShown: true }} />
+      <Tab.Screen name="Church" component={ChurchScreen} options={{ headerShown: true }} />
+      <Tab.Screen name="Community" component={CommunityScreen} options={{ headerShown: true }} />
     </Tab.Navigator>
 
   )
@@ -186,19 +182,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
+    flexDirection: 'column',
     backgroundColor: 'white',
   },
   header: {
     width: '100%',
-    height: '10%',
-    backgroundColor: 'white',
+    height: 120,
+    // backgroundColor: 'yellow',
   },
   title: {
     width: '100%',
-    height: '18%',
+    height: 100,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    // backgroundColor: 'blue',
     color: 'black',
     fontSize: 40,
   },
@@ -213,4 +210,28 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '20%',
   },
+  topbar:{
+    width: '100%',
+    height: 80,
+    
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    borderBottomColor: '#dbdbdb',
+    borderBottomWidth: 0.5,
+    padding: 5,
+  },
+  topbartext:{
+    
+    height: 50,
+    fontSize: 40,
+    fontWeight: 'bold',
+    
+    
+  },
+  topbarsetting:{
+    
+    
+    fontSize: 30,
+  }
 });
