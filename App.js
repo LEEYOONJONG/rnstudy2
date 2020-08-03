@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TextInput } from 'react-native-gesture-handler';
 import CustomButton from './CustomButton';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 function IntroScreen({ navigation, route }) {
 
@@ -76,7 +77,7 @@ function loginScreen({ navigation, route }) {
   );
 }
 
-function FirstScreen({ navigation, route }) {
+function MyScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -88,6 +89,7 @@ function FirstScreen({ navigation, route }) {
             navigation.navigate('Intro')
           }}
         />
+        
       </View>
 
 
@@ -95,21 +97,22 @@ function FirstScreen({ navigation, route }) {
     
   );
 }
-function SecondScreen() {
+function GroupScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>second!</Text>
+      <Icon name="bluetooth-outline" size={30} color="blue"/>
     </View>
   );
 }
-function ThirdScreen() {
+function ChurchScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>third!</Text>
     </View>
   );
 }
-function FourthScreen() {
+function CommunityScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>fourth!</Text>
@@ -135,11 +138,43 @@ function App() {
 }
 function Home() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="First" component={FirstScreen} options={{headerShown: false}} />
-      <Tab.Screen name="Second" component={SecondScreen} options={{headerShown: true}}/>
-      <Tab.Screen name="Third" component={ThirdScreen} options={{headerShown: true}}/>
-      <Tab.Screen name="Fourth" component={FourthScreen} options={{headerShown: true}}/>
+    <Tab.Navigator
+      screenOptions={({route})=> ({tabBarIcon: ({focused, color, size})=>{
+        let iconName;
+        if (route.name === 'My'){
+          iconName = focused
+          ? 'person'
+          : 'person-outline'
+        }
+        else if (route.name === 'Group'){
+          iconName = focused
+          ? 'people'
+          : 'people-outline'
+        }
+        else if (route.name === 'Church'){
+          iconName = focused
+          ? 'grid'
+          : 'grid-outline'
+        }
+        else if (route.name === 'Community'){
+          iconName = focused
+          ? 'globe'
+          : 'globe-outline'
+        }
+        return <Icon name={iconName} size={size} color={color} />;
+
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor: 'tomato',
+      inactiveTintColor:'gray',
+    }}
+    
+    >
+      <Tab.Screen name="My" component={MyScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Group" component={GroupScreen} options={{headerShown: true}}/>
+      <Tab.Screen name="Church" component={ChurchScreen} options={{headerShown: true}}/>
+      <Tab.Screen name="Community" component={CommunityScreen} options={{headerShown: true}}/>
     </Tab.Navigator>
 
   )
