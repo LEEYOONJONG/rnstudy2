@@ -1,14 +1,16 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { StyleSheet, Button, View, Text } from 'react-native';
+import { StyleSheet, Button, View, Text, ScrollView } from 'react-native';
 import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TextInput } from 'react-native-gesture-handler';
 import CustomButton from './CustomButton';
+import MenuButton from './MenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+// import {IntroScreen} from './IntroScreen';
 function IntroScreen({ navigation, route }) {
 
   return (
@@ -76,41 +78,106 @@ function loginScreen({ navigation, route }) {
     </View>
   );
 }
+function SettingsScreen({ navigation, route }) {
+  return (
+    <View style={styles.container}>
+      <View style={[styles.topbar,{marginBottom: 10}]}>
+        <Text style={styles.topbartext}>Settings</Text>
+        <Icon style={styles.topbarmenu} name="close" onPress={()=>{navigation.navigate('My')}}/>
+      </View>
+      <View style={styles.content}>
+        <ScrollView style={styles.scroll}>
+          <MenuButton
+            title="본인 정보 수정"
+            onPress={() => { }}
+            titleColor='black'
+            iconName='pencil'
+          />
+          <MenuButton
+            title="교회 등록"
+            onPress={() => { }}
+            titleColor='black'
+            iconName='add'
+          />
+          <MenuButton
+            title="로그아웃"
+            onPress={() => { }}
+            titleColor='black'
+            iconName='log-out'
+            onPress={()=>{navigation.navigate('Intro');}}
+          />
+
+        </ScrollView>
+      </View>
+      
+    </View>
+  );
+}
 
 function MyScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <View style={styles.topbar}>
         <Text style={styles.topbartext}>My</Text>
-        <Icon style={styles.topbarsetting} name="cog" onPress={()=>{navigation.navigate('Intro')}} />
+        <Icon style={styles.topbarmenu} name="cog" onPress={() => { navigation.navigate('Settings') }} />
+      </View>
+      <View style={styles.content}>
+        <ScrollView style={styles.scroll}>
+          <View style={[styles.myblock, { backgroundColor: '#9403fc' }]}>
+            <View>
+              <Text style={styles.myblocktitle}>오늘의 말씀</Text>
+              <Text style={styles.myblocksubtitle}>이근</Text>
+            </View>
+            <View style={styles.myblocktextview}>
+              <Text style={styles.myblocktext}>너 인성 문제있어?</Text>
+            </View>
+          </View>
+          <View style={[styles.myblock, { backgroundColor: '#6b26ff', height: 280 }]}>
+            <View style={ styles.myblocktitleview }>
+              <Text style={styles.myblocktitle}>오늘의 Q.T</Text>
+              
+            </View>
+          </View>
+          <View style={[styles.myblock, { backgroundColor: '#2651ff', height:280}]}>
+            <Text style={styles.myblocktitle}>오늘의 기도</Text>
+          </View>
+          
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+function GroupScreen({ navigation, route }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.topbar}>
+        <Text style={styles.topbartext}>Group</Text>
       </View>
       <View style={styles.content}>
       </View>
-
-
     </View>
 
   );
 }
-function GroupScreen() {
+function ChurchScreen({ navigation, route }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>second!</Text>
-      <Icon name="bluetooth-outline" size={30} color="blue" />
+    <View style={styles.container}>
+      <View style={styles.topbar}>
+        <Text style={styles.topbartext}>Church</Text>
+      </View>
+      <View style={styles.content}>
+      </View>
     </View>
   );
 }
-function ChurchScreen() {
+function CommunityScreen({ navigation, route }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>third!</Text>
-    </View>
-  );
-}
-function CommunityScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>fourth!</Text>
+    <View style={styles.container}>
+      <View style={styles.topbar}>
+        <Text style={styles.topbartext}>Community</Text>
+      </View>
+      <View style={styles.content}>
+      </View>
     </View>
   );
 }
@@ -127,6 +194,7 @@ function App() {
         <Stack.Screen name="signup" component={signupScreen} options={{ title: '회원가입', headerTintColor: '#a30527', headerTitleStyle: { color: 'black' } }} />
         <Stack.Screen name="login" component={loginScreen} options={{ title: '로그인', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }} />
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false, title: '설정', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -181,7 +249,9 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
+    paddingLeft: 30,
+    paddingTop:30,
+    paddingRight:30,
     flexDirection: 'column',
     backgroundColor: 'white',
   },
@@ -202,18 +272,17 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 30,
-    backgroundColor: 'white',
+    justifyContent: 'flex-start',
+    // paddingBottom: 30,
+    // backgroundColor: 'green',
   },
   footer: {
     width: '100%',
     height: '20%',
   },
-  topbar:{
+  topbar: {
     width: '100%',
-    height: 80,
-    
+    height: 100,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
@@ -221,17 +290,62 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     padding: 5,
   },
-  topbartext:{
-    
+  topbartext: {
+
     height: 50,
     fontSize: 40,
     fontWeight: 'bold',
-    
+    // backgroundColor:'blue',
+
+  },
+  topbarmenu: {
+
+    // backgroundColor:'green',
+    fontSize: 30,
+    marginBottom: 5,
+  },
+  scroll:{
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    // backgroundColor: 'green',
+  },
+  myblock:{
+    width:'100%',
+    height: 150,
+    // backgroundColor: 'orange',
+    borderRadius: 15,
+    marginTop: 15,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  myblocktitleview:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     
   },
-  topbarsetting:{
+  myblocktitle:{
+    marginTop: 10,
+    marginLeft: 15,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  myblocksubtitle:{
+    fontSize: 18,
+    color: 'white',
+    marginLeft: 25,
+    marginTop: 10,
+    fontWeight:'bold',
+  },
+  myblocktextview:{
+    flex:1,width:'100%',alignItems: 'center', justifyContent:'center',
+  },
+  myblocktext:{
+    color:'white',
+    fontSize: 18,
     
-    
-    fontSize: 30,
   }
+  
 });

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
     TouchableOpacity,
-    Text,
+    Text, View,
     StyleSheet,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class CustomButton extends Component {
+export default class MenuButton extends Component {
 
     static defaultProps = {
         title: 'untitled', 
@@ -20,9 +21,12 @@ export default class CustomButton extends Component {
     render() {
         return (
             <TouchableOpacity
-                style={[styles.button, { backgroundColor: this.props.buttonColor }]}
+                style={styles.button}
                 onPress={this.props.onPress}>
-                <Text style={[styles.title, { color: this.props.titleColor }]}>{this.props.title}</Text>
+                <View style={styles.buttoncontainer}>
+                    <Icon name={this.props.iconName} size={20} color={'black'} />
+                    <Text style={[styles.title, { color: this.props.titleColor }]}>{this.props.title}</Text>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -30,15 +34,21 @@ export default class CustomButton extends Component {
 
 const styles = StyleSheet.create({
     button: {
-        height: 80,
-        alignItems: 'center',
+        height: 40,
+        alignItems: 'flex-start',
         justifyContent: 'center',
         backgroundColor: 'white',
-        marginBottom: 10,
-        borderRadius: 5,
+        marginTop: 5,
+        
         maxHeight: 60,
+    },
+    buttoncontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     title: {
         fontSize: 15,
+        marginLeft: 20,
     },
 });
