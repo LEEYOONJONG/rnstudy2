@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 5,
         // backgroundColor:'green',
+
         maxHeight: 60,
     },
     buttoncontainer: {

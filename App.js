@@ -133,18 +133,18 @@ function MyScreen({ navigation, route }) {
             </View>
           </View>
           <View style={[styles.myblock, { backgroundColor: '#6b26ff', height: 280 }]}>
-            <View style={ styles.myblocktitleview }>
+            <View style={styles.myblocktitleview}>
               <Text style={styles.myblocktitle}>오늘의 Q.T</Text>
-              <TouchableOpacity style={[styles.myblockbutton,{backgroundColor:'#8263ff'}]}><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
+
+              <TouchableOpacity style={[styles.myblockbutton, { backgroundColor: '#8263ff' }]}><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
             </View>
           </View>
-          <View style={[styles.myblock, { backgroundColor: '#2651ff', height:280}]}>
-          <View style={ styles.myblocktitleview }>
+          <View style={[styles.myblock, { backgroundColor: '#2651ff', height: 280 }]}>
+            <View style={styles.myblocktitleview}>
               <Text style={styles.myblocktitle}>오늘의 기도</Text>
-              <TouchableOpacity style={[styles.myblockbutton,{backgroundColor:'#5778ff'}]}><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.myblockbutton, { backgroundColor: '#5778ff' }]}><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
             </View>
           </View>
-          
         </ScrollView>
       </View>
     </View>
@@ -155,13 +155,13 @@ function GroupScreen({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.topbar}>
         <Text style={styles.topbartext}>Group</Text>
-        <Icon style={styles.topbarmenu} name="pencil"/>
+        <Icon style={styles.topbarmenu} name="pencil" />
       </View>
       <View style={styles.content}>
         <ScrollView style={styles.scroll}>
           <View style={styles.groupvertical}>
             <View style={styles.grouphorizontal}>
-              <View style={[styles.groupblockL,{backgroundColor:'#ff3d3d'}]}>
+              <View style={[styles.groupblockL, { backgroundColor: '#ff3d3d' }]}>
                 <Text style={styles.groupblocktitle}>2020 찬양팀</Text>
                 <View style={styles.groupblockmenubar}><Icon style={styles.groupblockmenu} name="cog" /></View>
               </View>
@@ -372,7 +372,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     // backgroundColor:'blue',
-
   },
   topbarmenu: {
 
@@ -491,5 +490,4 @@ const styles = StyleSheet.create({
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  
 });
