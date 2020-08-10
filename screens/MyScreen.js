@@ -31,7 +31,7 @@ export function MyScreen({ navigation, route }) {
               <View style={styles.myblocktitleview}>
                 <Text style={styles.myblocktitle}>오늘의 Q.T</Text>
   
-                <TouchableOpacity style={[styles.myblockbutton, { backgroundColor: '#8263ff' }]}><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.myblockbutton, { backgroundColor: '#8263ff' }]} onPress={()=> {navigation.navigate('Myqtwrite')}} ><Text style={styles.myblockbuttontext}>작성</Text></TouchableOpacity>
               </View>
             </View>
             <View style={[styles.myblock, { backgroundColor: '#2651ff', height: 280 }]}>

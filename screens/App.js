@@ -16,7 +16,7 @@ import {MyScreen} from './MyScreen';
 import {GroupScreen} from './GroupScreen';
 import {ChurchScreen} from './ChurchScreen';
 import {CommunityScreen} from './CommunityScreen';
-
+import {MyqtwriteScreen} from './MyqtwriteScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +31,7 @@ function App() {
         <Stack.Screen name="login" component={loginScreen} options={{ title: '로그인', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }} />
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false, title: '설정', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }}/>
+        <Stack.Screen name="Myqtwrite" component={MyqtwriteScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

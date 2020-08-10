@@ -15,6 +15,8 @@ export function CommunityScreen({ navigation, route }) {
           <Text style={styles.topbartext}>Community</Text>
         </View>
         <View style={styles.content}>
+
+          
         </View>
       </View>
     );
