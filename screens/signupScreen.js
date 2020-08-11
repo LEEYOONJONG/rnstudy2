@@ -18,12 +18,21 @@ export function signupScreen({ navigation, route }) {
 
         <View style={styles.content}>
           <TextInput placeholder="이름" style={styles.inputbox} />
-          <View style={{flexDirection: 'row'}}>
-          <TextInput placeholder="휴대전화번호" style={styles.inputbox} />
-          </View>
-          <TextInput placeholder="사용할 아이디를 입력하세요." style={styles.inputbox} />
+          <TextInput placeholder="사용할 아이디를 입력하세요.(OOO@example.com)" style={[styles.inputbox, {fontSize:15}]} />
           <TextInput placeholder="사용할 비밀번호를 입력하세요." style={styles.inputbox} />
+          
+          <View style={{flexDirection: 'row', }}>
+            <View style={{flex:1}}>
+              <TextInput placeholder="휴대전화번호" style={styles.inputbox} />
+            </View>
+            <View style={{alignItems:'flex-end',justifyContent:'center',marginLeft:10}}>
+              <TouchableOpacity style={{width: 70,height: 45,backgroundColor:'black', alignItems:'center', justifyContent:'center'}}><Text style={{color:'white'}}>인증</Text></TouchableOpacity>
+            </View>
+          </View>
+          
+
         </View>
+        
         <View style={styles.footer}>
           <CustomButton
             buttonColor={'#7c5b62'}
@@ -33,6 +42,7 @@ export function signupScreen({ navigation, route }) {
               navigation.navigate('Intro');
             }}
           />
+          
         </View>
         
         
@@ -58,9 +68,10 @@ const styles = StyleSheet.create({
   }, 
   content: {
     flex: 1,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    // paddingBottom: 30,
+    marginBottom: 80,
     // backgroundColor: 'green',
   },
   footer: {
@@ -68,6 +79,7 @@ const styles = StyleSheet.create({
     height: '20%',
   },
   inputbox: {
+    height: 45,
     width: '100%',
     fontSize: 18,
     borderWidth: 1,
