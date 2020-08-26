@@ -15,7 +15,7 @@ export function IntroScreen({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.header} />
       <View style={styles.title}>
-        <Text style={{ fontSize: 30 }}>우리, 여기에서</Text>
+        <Text style={{ fontSize: 30 }}>우리</Text>
         <Text style={{ fontSize: 40, fontWeight: 'bold' }}>모일래?</Text>
       </View>
       <View style={styles.content} />

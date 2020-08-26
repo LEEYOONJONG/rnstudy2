@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { StyleSheet, Button, View, Text, TextInput, ScrollView } from 'react-native';
 import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,16 +10,240 @@ import MenuButton from './buttons/MenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-export function MyqtwriteScreen({ navigation, route }) {
-    const [value, onChangeText] = React.useState('Useless Placeholder');
-    return (
+export function Note(props){
+    
+        return (
         <View>
-        <Text>오늘 나의 QT</Text>
-        <TextInput 
-        style={{height:40, borderColor: 'gray', borderWidth:1}}
-        onChangeText={text=>onChangeText(text)}
-        value={value}
-        />
+        <View>
+            <Text>{props.val.date}</Text>
+            <Text>{props.val.note}</Text> 
+        </View>
+        <TouchableOpacity onPress={props.deleteMethod}>
+            <Text>D</Text>
+        </TouchableOpacity>
+        
+        </View>
+        );
+    
+}
+
+export function MyqtwriteScreen({ navigation, route }) {
+
+    const [noteArray, setNoteArray] = useState([]);
+    const [noteText, setNoteText] = useState('');
+
+
+    let notes = noteArray.map((val, key) => {
+        console.log('start');
+        return <Note key={key} keyval={key} val={val}
+            deleteMethod={() => deleteNote(key)} />
+    });
+    const addNote = ()=>{
+        if (noteText) {
+            var d = new Date();
+            noteArray.unshift({
+                'date': d.getFullYear() +
+                    "/" + (d.getMonth() + 1) +
+                    "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes(),
+                'note': noteText,
+            });
+            setNoteArray(noteArray);
+            setNoteText('');
+        }
+    };
+    const deleteNote = (key)=> {
+        const newArray=[...noteArray];
+        newArray.splice(key, 1);
+        setNoteArray(newArray);    
+    };
+    
+    return (
+        <View style={styles.container}>
+            <TextInput
+                onChangeText={(noteText) => setNoteText(noteText)}
+                value={noteText}
+                placeholder='>>>note'
+                placeholderTextColor='gray'
+            ></TextInput>
+            <TouchableOpacity onPress={addNote}>
+                <Text>+</Text>
+            </TouchableOpacity>
+            <View>
+                {notes}
+            </View>
+            
         </View>
     );
+
+    
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingLeft: 30,
+        paddingTop: 30,
+        paddingRight: 30,
+        flexDirection: 'column',
+        backgroundColor: 'white',
+    },
+    header: {
+        width: '100%',
+        height: 120,
+        // backgroundColor: 'yellow',
+    },
+    title: {
+        width: '100%',
+        height: 100,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        // backgroundColor: 'blue',
+        color: 'black',
+        fontSize: 40,
+    },
+    content: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        // paddingBottom: 30,
+        // backgroundColor: 'green',
+    },
+    footer: {
+        width: '100%',
+        height: '20%',
+    },
+    topbar: {
+        width: '100%',
+        height: 100,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        borderBottomColor: '#dbdbdb',
+        borderBottomWidth: 0.5,
+        padding: 5,
+    },
+    topbartext: {
+
+        height: 50,
+        fontSize: 40,
+        fontWeight: 'bold',
+        // backgroundColor:'blue',
+    },
+    topbarmenu: {
+
+        // backgroundColor:'green',
+        fontSize: 30,
+        marginBottom: 5,
+    },
+    scroll: {
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        // backgroundColor: 'green',
+    },
+    myblock: {
+        width: '100%',
+        height: 150,
+        // backgroundColor: 'orange',
+        borderRadius: 15,
+        marginTop: 15,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+    },
+    myblocktitleview: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        // backgroundColor:'green',
+        justifyContent: 'space-between',
+
+    },
+    myblocktitle: {
+        marginTop: 10,
+        marginLeft: 15,
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    myblockbutton: {
+        backgroundColor: 'green',
+        color: 'white',
+        marginRight: 10,
+        marginTop: 10,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+    },
+    myblockbuttontext: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    myblocksubtitle: {
+        fontSize: 18,
+        color: 'white',
+        marginLeft: 25,
+        marginTop: 10,
+        fontWeight: 'bold',
+    },
+    myblocktextview: {
+        flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center',
+    },
+    myblocktext: {
+        color: 'white',
+        fontSize: 18,
+
+    },
+
+    groupvertical: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+
+    },
+    grouphorizontal: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    groupblockL: {
+        flex: 0.5,
+        height: 150,
+        backgroundColor: 'green',
+        marginTop: 15,
+        marginRight: 15,
+        borderRadius: 10,
+        justifyContent: 'space-between',
+    },
+    groupblockR: {
+        flex: 0.5,
+        height: 150,
+        backgroundColor: 'green',
+        marginTop: 15,
+        borderRadius: 10,
+        justifyContent: 'space-between',
+    },
+    groupblocktitle: {
+        marginTop: 10,
+        marginLeft: 15,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    groupblockmenubar: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    groupblockmenu: {
+        fontSize: 25,
+        color: 'white',
+        marginBottom: 5,
+        marginRight: 5,
+    },
+    separator: {
+        marginVertical: 4,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+    },
+});

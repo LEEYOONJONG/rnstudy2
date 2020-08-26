@@ -17,6 +17,7 @@ import {GroupScreen} from './GroupScreen';
 import {ChurchScreen} from './ChurchScreen';
 import {CommunityScreen} from './CommunityScreen';
 import {MyqtwriteScreen} from './MyqtwriteScreen';
+import {GroupItemScreen} from './GroupItemScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +33,7 @@ function App() {
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false, title: '설정', headerTintColor: '#a312a3', headerTitleStyle: { color: 'black' } }}/>
         <Stack.Screen name="Myqtwrite" component={MyqtwriteScreen} />
+        <Stack.Screen name="GroupItem" component={GroupItemScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

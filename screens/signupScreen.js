@@ -23,7 +23,7 @@ export function signupScreen({ navigation, route }) {
           
           <View style={{flexDirection: 'row', }}>
             <View style={{flex:1}}>
-              <TextInput placeholder="휴대전화번호" style={styles.inputbox} />
+              <TextInput placeholder="휴대전화번호" style={styles.inputbox} keyboardType={'numeric'} />
             </View>
             <View style={{alignItems:'flex-end',justifyContent:'center',marginLeft:10}}>
               <TouchableOpacity style={{width: 70,height: 45,backgroundColor:'black', alignItems:'center', justifyContent:'center'}}><Text style={{color:'white'}}>인증</Text></TouchableOpacity>
