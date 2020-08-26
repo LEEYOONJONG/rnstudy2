@@ -10,21 +10,26 @@ import MenuButton from './buttons/MenuButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-export function Note(props){
-    
-        return (
-        <View>
-        <View>
-            <Text>{props.val.date}</Text>
-            <Text>{props.val.note}</Text> 
+export function Note(props) {
+    return (
+        <View style={[styles.myblock, {backgroundColor:props.val.color}]}>
+            <View style={{alignItems:'flex-start'}}>
+                <View style={{borderBottomWidth:1,borderColor:'white',marginBottom:5}}>
+                    <Text style={[styles.myblocktitle]}>{props.val.date}</Text>
+                </View>
+                <Text style={styles.myblocktext}>{props.val.note}</Text>
+            </View>
+            <View style={{width: '100%' ,flexDirection:'row',justifyContent:'flex-end'}}>
+                <TouchableOpacity style={{marginTop:5,marginLeft:10}} >
+                    <Text style={styles.myblockbuttontext}>수정</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.deleteMethod} style={{marginTop:5,marginLeft:10}} >
+                    <Text style={styles.myblockbuttontext}>삭제</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-        <TouchableOpacity onPress={props.deleteMethod}>
-            <Text>D</Text>
-        </TouchableOpacity>
-        
-        </View>
-        );
-    
+    );
+
 }
 
 export function MyqtwriteScreen({ navigation, route }) {
@@ -32,50 +37,69 @@ export function MyqtwriteScreen({ navigation, route }) {
     const [noteArray, setNoteArray] = useState([]);
     const [noteText, setNoteText] = useState('');
 
+    let rdcolor = 'hsl('+Math.random()*255+','+ Math.random()*(60)+10+'%, 82%)';
 
     let notes = noteArray.map((val, key) => {
         console.log('start');
         return <Note key={key} keyval={key} val={val}
             deleteMethod={() => deleteNote(key)} />
     });
-    const addNote = ()=>{
+    const addNote = () => {
         if (noteText) {
             var d = new Date();
             noteArray.unshift({
                 'date': d.getFullYear() +
-                    "/" + (d.getMonth() + 1) +
-                    "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes(),
+                    "년 " + (d.getMonth() + 1) +
+                    "월 " + d.getDate() + "일 " + d.getHours() + "시 " + d.getMinutes()+"분",
                 'note': noteText,
+                'color': rdcolor,
             });
             setNoteArray(noteArray);
             setNoteText('');
+            // alert('큐티 입력을 완료했습니다.');
+        }
+        else {
+            alert('큐티를 입력하세요');
         }
     };
-    const deleteNote = (key)=> {
-        const newArray=[...noteArray];
+    const deleteNote = (key) => {
+        const newArray = [...noteArray];
         newArray.splice(key, 1);
-        setNoteArray(newArray);    
+        setNoteArray(newArray);
     };
-    
+
     return (
         <View style={styles.container}>
-            <TextInput
-                onChangeText={(noteText) => setNoteText(noteText)}
-                value={noteText}
-                placeholder='>>>note'
-                placeholderTextColor='gray'
-            ></TextInput>
-            <TouchableOpacity onPress={addNote}>
-                <Text>+</Text>
-            </TouchableOpacity>
-            <View>
-                {notes}
+            <View style={styles.topbar}>
+                <Text style={styles.topbartext}>오늘의 큐티</Text>
+                <Icon style={styles.topbarmenu} name="close" onPress={() => { navigation.navigate('My') }} />
             </View>
-            
+            <View style={styles.qtinputblock}>
+                <TextInput
+                    onChangeText={(noteText) => setNoteText(noteText)}
+                    value={noteText}
+                    placeholder='큐티를 입력하세요'
+                    placeholderTextColor='gray'
+                    multiline={true}
+                    style={styles.qtinputtext}
+                />
+                <TouchableOpacity onPress={addNote} style={styles.myblockbutton}>
+                    <Text style={styles.myblockbuttontext}>추가</Text>
+                </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.scroll}>
+                <View style={{alignItems:'flex-start'}}>
+                    {notes}
+                </View>
+            </ScrollView>
+
+
+
         </View>
     );
 
-    
+
 }
 
 const styles = StyleSheet.create({
@@ -87,20 +111,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
     },
-    header: {
-        width: '100%',
-        height: 120,
-        // backgroundColor: 'yellow',
-    },
-    title: {
-        width: '100%',
-        height: 100,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        // backgroundColor: 'blue',
-        color: 'black',
-        fontSize: 40,
-    },
+
+
     content: {
         flex: 1,
         alignItems: 'center',
@@ -108,10 +120,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 30,
         // backgroundColor: 'green',
     },
-    footer: {
-        width: '100%',
-        height: '20%',
-    },
+
     topbar: {
         width: '100%',
         height: 100,
@@ -143,12 +152,12 @@ const styles = StyleSheet.create({
     },
     myblock: {
         width: '100%',
-        height: 150,
         // backgroundColor: 'orange',
         borderRadius: 15,
         marginTop: 15,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
+        padding: 15,
     },
     myblocktitleview: {
         width: '100%',
@@ -159,20 +168,21 @@ const styles = StyleSheet.create({
 
     },
     myblocktitle: {
-        marginTop: 10,
-        marginLeft: 15,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'black',
+        marginBottom: 3,
     },
     myblockbutton: {
-        backgroundColor: 'green',
+        backgroundColor: '#247fff',
         color: 'white',
-        marginRight: 10,
-        marginTop: 10,
+        // marginRight: 10,
+        // marginTop: 10,
         borderRadius: 10,
-        paddingHorizontal: 15,
-        paddingVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        width: 60,
+        alignItems: 'center'
     },
     myblockbuttontext: {
         color: 'white',
@@ -191,59 +201,23 @@ const styles = StyleSheet.create({
         flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center',
     },
     myblocktext: {
-        color: 'white',
-        fontSize: 18,
+        color: 'black',
+        fontSize: 16,
+        marginTop: 3,
 
     },
-
-    groupvertical: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-
-    },
-    grouphorizontal: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    groupblockL: {
-        flex: 0.5,
-        height: 150,
-        backgroundColor: 'green',
-        marginTop: 15,
-        marginRight: 15,
+    qtinputblock:{
+        flexDirection: 'row', 
+        backgroundColor:'#dbdbdb',
+        alignItems:'center',
+        padding: 10,
         borderRadius: 10,
-        justifyContent: 'space-between',
+        marginVertical:10,
     },
-    groupblockR: {
-        flex: 0.5,
-        height: 150,
-        backgroundColor: 'green',
-        marginTop: 15,
-        borderRadius: 10,
-        justifyContent: 'space-between',
-    },
-    groupblocktitle: {
-        marginTop: 10,
-        marginLeft: 15,
+    qtinputtext: {
+        flex: 1,
         fontSize: 18,
-        fontWeight: 'bold',
-        color: 'white',
+        paddingHorizontal:10,
     },
-    groupblockmenubar: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-    },
-    groupblockmenu: {
-        fontSize: 25,
-        color: 'white',
-        marginBottom: 5,
-        marginRight: 5,
-    },
-    separator: {
-        marginVertical: 4,
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
+
 });
