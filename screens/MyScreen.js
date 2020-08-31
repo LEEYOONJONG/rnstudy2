@@ -21,10 +21,10 @@ export function MyScreen({ navigation, route }) {
             <View style={[styles.myblock, { backgroundColor: '#9403fc' }]}>
               <View>
                 <Text style={styles.myblocktitle}>오늘의 말씀</Text>
-                <Text style={styles.myblocksubtitle}>이근</Text>
+                <Text style={styles.myblocksubtitle}>안녕</Text>
               </View>
               <View style={styles.myblocktextview}>
-                <Text style={styles.myblocktext}>너 인성 문제있어?</Text>
+                <Text style={styles.myblocktext}>로로로롤ㄹㄹ</Text>
               </View>
             </View>
             <View style={[styles.myblock, { backgroundColor: '#6b26ff', height: 280 }]}>

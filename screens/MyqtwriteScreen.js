@@ -14,18 +14,18 @@ export function Note(props) {
     return (
         <View style={[styles.myblock, {backgroundColor:props.val.color}]}>
             <View style={{alignItems:'flex-start'}}>
-                <View style={{borderBottomWidth:1,borderColor:'white',marginBottom:5}}>
+                <View style={{borderBottomWidth:2,borderColor:'white',marginBottom:5}}>
                     <Text style={[styles.myblocktitle]}>{props.val.date}</Text>
                 </View>
                 <Text style={styles.myblocktext}>{props.val.note}</Text>
             </View>
             <View style={{width: '100%' ,flexDirection:'row',justifyContent:'flex-end'}}>
-                <TouchableOpacity style={{marginTop:5,marginLeft:10}} >
+                <TouchableOpacity onPress={props.updateMethod} style={{marginTop:5,marginLeft:10}} >
                     <Text style={styles.myblockbuttontext}>수정</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={props.deleteMethod} style={{marginTop:5,marginLeft:10}} >
                     <Text style={styles.myblockbuttontext}>삭제</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> 
             </View>
         </View>
     );
@@ -33,21 +33,25 @@ export function Note(props) {
 }
 
 export function MyqtwriteScreen({ navigation, route }) {
-
     const [noteArray, setNoteArray] = useState([]);
     const [noteText, setNoteText] = useState('');
+    const [mode, setMode] = useState('write');
+    const [noteKey, setNoteKey] = useState('');
 
     let rdcolor = 'hsl('+Math.random()*255+','+ Math.random()*(60)+10+'%, 82%)';
 
     let notes = noteArray.map((val, key) => {
-        console.log('start');
-        return <Note key={key} keyval={key} val={val}
-            deleteMethod={() => deleteNote(key)} />
+        console.log('value is '+val.note+', key is '+key);
+        return <Note key={key} val={val} navigation={navigation}
+            deleteMethod={() => deleteNote(key)}
+            updateMethod={() => updateNote(key)}
+            />  
     });
+    console.log('length is ' + noteArray.length);
     const addNote = () => {
         if (noteText) {
             var d = new Date();
-            noteArray.unshift({
+            noteArray.push({
                 'date': d.getFullYear() +
                     "년 " + (d.getMonth() + 1) +
                     "월 " + d.getDate() + "일 " + d.getHours() + "시 " + d.getMinutes()+"분",
@@ -57,47 +61,90 @@ export function MyqtwriteScreen({ navigation, route }) {
             setNoteArray(noteArray);
             setNoteText('');
             // alert('큐티 입력을 완료했습니다.');
+           
         }
         else {
             alert('큐티를 입력하세요');
         }
     };
-    const deleteNote = (key) => {
+    const deleteNote = (key) => {      
         const newArray = [...noteArray];
         newArray.splice(key, 1);
         setNoteArray(newArray);
     };
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.topbar}>
-                <Text style={styles.topbartext}>오늘의 큐티</Text>
-                <Icon style={styles.topbarmenu} name="close" onPress={() => { navigation.navigate('My') }} />
-            </View>
-            <View style={styles.qtinputblock}>
-                <TextInput
-                    onChangeText={(noteText) => setNoteText(noteText)}
-                    value={noteText}
-                    placeholder='큐티를 입력하세요'
-                    placeholderTextColor='gray'
-                    multiline={true}
-                    style={styles.qtinputtext}
-                />
-                <TouchableOpacity onPress={addNote} style={styles.myblockbutton}>
-                    <Text style={styles.myblockbuttontext}>추가</Text>
-                </TouchableOpacity>
-            </View>
-
-            <ScrollView style={styles.scroll}>
-                <View style={{alignItems:'flex-start'}}>
-                    {notes}
+    const updateNote = (key) =>{
+        setMode('update');
+        setNoteText(noteArray[key].note);
+        setNoteKey(key);
+    };
+    const updateNote2 = ()=>{
+        noteArray[noteKey].note = noteText;
+        var d = new Date();
+        noteArray[noteKey].date = d.getFullYear() + "년 " + (d.getMonth() + 1) + "월 " + d.getDate() + "일 " + d.getHours() + "시 " + d.getMinutes()+"분";
+        setMode('write');
+        setNoteText('');
+    };
+    if (mode === 'write') {
+        return (
+            <View style={styles.container}>
+                <View style={styles.topbar}>
+                    <Text style={styles.topbartext}>오늘의 큐티</Text>
+                    <Icon style={styles.topbarmenu} name="close" onPress={() => { navigation.navigate('My') }} />
                 </View>
-            </ScrollView>
+                <View style={styles.qtinputblock}>
+                    <TextInput
+                        onChangeText={(noteText) => setNoteText(noteText)}
+                        value={noteText}
+                        placeholder='큐티를 입력하세요'
+                        placeholderTextColor='gray'
+                        multiline={true}
+                        style={styles.qtinputtext}
+                    />
+                    <TouchableOpacity onPress={addNote} style={styles.myblockbutton}>
+                        <Text style={styles.myblockbuttontext}>추가</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView style={styles.scroll}>
+                    <View style={{ alignItems: 'flex-start' }}>
+                        {notes}
+                    </View>
+                </ScrollView>
 
 
 
-        </View>
-    );
+            </View>
+        );
+    }
+    else if (mode === 'update'){
+        // console.log('---key for update is ' + key);
+        return (
+            <View style={styles.container}>
+                <View style={styles.topbar}>
+                    <Text style={styles.topbartext}>큐티수정하기</Text>
+                    <Icon style={styles.topbarmenu} name="close" onPress={() => { setMode('write')}} />
+                </View>
+                <View style={styles.qtinputblock}>
+                    <TextInput
+                        onChangeText={(noteText) => setNoteText(noteText)}
+                        value={noteText}
+                        placeholder='큐티를 입력하세요'
+                        placeholderTextColor='gray'
+                        multiline={true}
+                        style={styles.qtinputtext}
+                    />
+                    <TouchableOpacity onPress={updateNote2} style={styles.myblockbutton}>
+                        <Text style={styles.myblockbuttontext}>완료</Text>
+                    </TouchableOpacity>
+                </View>
+
+                
+
+
+
+            </View>
+        );
+    }
 
 
 }
